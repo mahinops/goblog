@@ -10,6 +10,7 @@ import (
 
 type UserUsecase interface {
 	RegisterUser(user *models.User) error
+	Login(email, password string) (*models.User, error)
 }
 
 type userUsecase struct {
@@ -36,4 +37,17 @@ func (u *userUsecase) RegisterUser(user *models.User) error {
 
 	// Create the user
 	return u.userRepo.CreateUser(user)
+}
+
+func (u *userUsecase) Login(email, password string) (*models.User, error) {
+	user, err := u.userRepo.GetUserByEmail(email)
+	if err != nil {
+		return nil, errors.New("invalid email or password")
+	}
+
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
+		return nil, errors.New("invalid email or password")
+	}
+
+	return user, nil
 }
