@@ -11,6 +11,7 @@ import (
 type UserUsecase interface {
 	RegisterUser(user *models.User) error
 	Login(email, password string) (*models.User, error)
+	GetUserByID(userID uint) (*models.User, error)
 }
 
 type userUsecase struct {
@@ -50,4 +51,8 @@ func (u *userUsecase) Login(email, password string) (*models.User, error) {
 	}
 
 	return user, nil
+}
+
+func (u *userUsecase) GetUserByID(userID uint) (*models.User, error) {
+	return u.userRepo.GetUserByID(userID)
 }
