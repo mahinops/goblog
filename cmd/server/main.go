@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/gin-gonic/gin"
 	"github.com/mokhlesurr031/goblog/config"
 	"github.com/mokhlesurr031/goblog/pkg/db"
 )
@@ -17,5 +18,8 @@ func main() {
 	}
 
 	defer db.CloseDB()
+
+	// Create a Gin router
+	r := gin.Default()
 
 }
