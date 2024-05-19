@@ -5,9 +5,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/mokhlesurr031/goblog/config"
-	"github.com/mokhlesurr031/goblog/internal/user/delivery/http"
-	"github.com/mokhlesurr031/goblog/internal/user/repository"
-	"github.com/mokhlesurr031/goblog/internal/user/usecase"
+	userHttp "github.com/mokhlesurr031/goblog/internal/user/delivery/http"
+	userRepo "github.com/mokhlesurr031/goblog/internal/user/repository"
+	userUsecase "github.com/mokhlesurr031/goblog/internal/user/usecase"
 	"github.com/mokhlesurr031/goblog/pkg/db"
 )
 
@@ -31,9 +31,9 @@ func main() {
 	r := gin.Default()
 
 	// Initialize repository, usecase, and handler
-	userRepo := repository.NewUserRepository(db.DefaultDB())
-	userUsecase := usecase.NewUserUsecase(userRepo)
-	http.NewUserHandler(r, userUsecase)
+	userRepo := userRepo.NewUserRepository(db.DefaultDB())
+	userUsecase := userUsecase.NewUserUsecase(userRepo)
+	userHttp.NewUserHandler(r, userUsecase)
 
 	// Start the Gin server on port 8080
 	if err := r.Run(":8080"); err != nil {
