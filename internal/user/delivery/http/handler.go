@@ -17,7 +17,7 @@ type UserHandler struct {
 func NewUserHandler(router *gin.Engine, userUsecase usecase.UserUsecase) {
 	handler := &UserHandler{userUsecase: userUsecase}
 
-	userRoutes := router.Group("/users")
+	userRoutes := router.Group("/api/v1/users")
 	{
 		// Routes excluded from authentication middleware
 		userRoutes.POST("/register", handler.RegisterUser)
